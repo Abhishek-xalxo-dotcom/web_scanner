@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Application Scanner</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
+        header h1 { color: #2c3e50; margin-bottom: 10px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #3498db; color: white; 
+               text-decoration: none; border-radius: 5px; margin: 5px; }
+        .btn-primary { background: #2ecc71; }
+        .scan-card { background: white; border-radius: 5px; padding: 20px; margin: 15px 0; 
+                     box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-running { border-left: 5px solid #3498db; }
+        .status-completed { border-left: 5px solid #2ecc71; }
+        .status-failed { border-left: 5px solid #e74c3c; }
+        .status-crawling, .status-scanning { border-left: 5px solid #f39c12; }
+        .empty-state { text-align: center; padding: 50px; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Web Application Security Scanner</h1>
+            <p>Automated security scanning for web applications</p>
+        </header>
+        
+        <div class="actions">
+            <a href="/scan" class="btn btn-primary">➕ New Scan</a>
+        </div>
+        
+        <div class="scans-section">
+            <h2>📋 Recent Scans</h2>
+            
+            {% if scans %}
+                {% for scan in scans %}
+                <div class="scan-card status-{{ scan.status.lower() }}">
+                    <h3>{{ scan.target_url }}</h3>
+                    <p>Status: {{ scan.status }} | Pages: {{ scan.pages_crawled or 0 }} | Started: {{ scan.start_time }}</p>
+                    <a href="/scan/{{ scan.id }}" class="btn">View Results</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <h3>No scans yet</h3>
+                    <p>Start your first security scan</p>
+                    <a href="/scan" class="btn btn-primary">Start Scan</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

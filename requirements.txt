@@ -1,0 +1,6 @@
+Flask==2.3.3
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3; sys_platform != 'win32'
+# lxml is optional - we can use html5lib as alternative
+html5lib==1.1
